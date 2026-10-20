@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09060e">
+<title>Little secret ♡</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;display:grid;place-items:center;padding:18px;
+ background:radial-gradient(ellipse at top,#35162c,#100914 60%,#030305);
+ color:#fff0f6;font-family:monospace
+}
+.panel{
+ width:100%;max-width:500px;padding:25px 20px;
+ background:#0b0812;border:1px solid #ff719f55;border-radius:18px;
+ box-shadow:0 0 45px #ff719f20
+}
+.top{display:flex;justify-content:space-between;gap:8px;color:#aa91a5;font-size:10px}
+h1{font-weight:normal;font-size:26px;margin-top:30px}
+.sub{color:#a797ae;font-size:12px;line-height:1.8}
+.terminal{margin-top:22px;padding:15px;min-height:150px;background:#040307;border:1px solid #ffffff16;border-radius:10px;font-size:12px;line-height:2;overflow-wrap:anywhere;color:#bcaebe}
+.pink{color:#ff719f}.white{color:#fff}
+.cursor{display:inline-block;width:7px;height:14px;background:#ff719f;animation:blink .8s infinite}
+@keyframes blink{50%{opacity:0}}
+.hidden{display:none!important}
+#reveal{text-align:center;padding-top:25px;animation:show 1.2s ease}
+@keyframes show{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.heart{font-size:48px;color:#ff719f;animation:beat 1.4s infinite}
+@keyframes beat{50%{transform:scale(1.12)}}
+.message{font:clamp(27px,7vw,36px)/1.5 Georgia,serif;color:#ffd6e4;margin:12px 0}
+.note{font-size:12px;line-height:1.9;color:#b5a6b8}
+button{width:100%;margin-top:22px;padding:14px;border-radius:9px;border:1px solid #ff719f70;background:#ff719f12;color:#ffe8f0;font:12px monospace}
+.footer{display:flex;justify-content:space-between;gap:8px;margin-top:24px;color:#766779;font-size:10px}
+</style>
+</head>
+<body>
+<main class="panel">
+ <div class="top"><span>♥ PRIVATE PROGRAM</span><span>only for you ♡</span></div>
+ <h1>Little secret.exe</h1>
+ <div class="sub">Инициализация личного сообщения...<br>Пожалуйста, подожди немного.</div>
+ <div class="terminal"><div id="log"></div><span id="cursor" class="cursor"></span></div>
+ <section id="reveal" class="hidden">
+  <div class="heart">♥</div>
+  <div class="message">Ti amo.<br>Люблю тебя, братик ♡</div>
+  <div class="note">Это маленькое напоминание:<br>ты очень дорог мне.<br>Береги себя там, ладно? ♡</div>
+  <button id="again">↻ ЗАПУСТИТЬ СНОВА</button>
+ </section>
+ <div class="footer"><span>made with love</span><span>heart-to-heart ♥</span></div>
+</main>
+<script>
+const log=document.getElementById('log');
+const cursor=document.getElementById('cursor');
+const reveal=document.getElementById('reveal');
+const lines=[
+ ['> booting secret.exe','pink'],
+ ['> searching for the right words...',''],
+ ['> checking heart status: 100%',''],
+ ['> recipient identified ♡','pink'],
+ ['> preparing something important',''],
+ ['> access granted.','white']
+];
+let runId=0;
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+async function run(){
+ const id=++runId;
+ log.innerHTML='';
+ reveal.classList.add('hidden');
+ cursor.classList.remove('hidden');
+ for(const [text,color] of lines){
+  if(id!==runId)return;
+  const row=document.createElement('div');
+  row.className='line '+color;
+  log.appendChild(row);
+  for(const ch of text){
+   if(id!==runId)return;
+   row.textContent+=ch;
+   await wait(28);
+  }
+  await wait(400);
+ }
+ if(id!==runId)return;
+ cursor.classList.add('hidden');
+ reveal.classList.remove('hidden');
+}
+document.getElementById('again').addEventListener('click',run);
+run();
+</script>
+</body>
+</html>
